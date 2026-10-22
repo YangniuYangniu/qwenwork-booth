@@ -10,86 +10,75 @@
     font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
     background: linear-gradient(160deg, #00C48C 0%, #00A3B5 100%);
     min-height: 100vh;
-    padding: 20px 16px 40px;
+    padding: 14px 12px 28px;
     color: #333;
   }
 
   .card {
     background: #fff;
-    border-radius: 20px;
-    padding: 28px 20px;
+    border-radius: 18px;
+    padding: 20px 16px;
     max-width: 420px;
     margin: 0 auto;
     box-shadow: 0 20px 60px rgba(0, 150, 120, 0.2);
   }
 
   /* Header */
-  .header { text-align: center; margin-bottom: 24px; }
-  .header .badge {
-    display: inline-block;
-    background: linear-gradient(135deg, #00C48C, #00A3B5);
-    color: #fff;
-    font-size: 11px;
-    font-weight: 600;
-    padding: 4px 12px;
-    border-radius: 20px;
-    letter-spacing: 1px;
-    margin-bottom: 12px;
-  }
+  .header { text-align: center; margin-bottom: 14px; }
   .header h1 {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
     color: #1a1a2e;
     line-height: 1.3;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
   .header h1 span { color: #00B894; }
   .header .scene {
-    font-size: 14px;
+    font-size: 13px;
     color: #888;
-    line-height: 1.5;
+    line-height: 1.4;
   }
 
   /* Divider */
   .divider {
     height: 1px;
     background: linear-gradient(to right, transparent, #d4f5e9, transparent);
-    margin: 20px 0;
+    margin: 12px 0;
   }
 
   /* Field section */
-  .field { margin-bottom: 20px; }
+  .field { margin-bottom: 12px; }
   .field-label {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     color: #555;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
   }
   .field-label .icon {
-    width: 18px;
-    height: 18px;
-    border-radius: 5px;
+    width: 17px;
+    height: 17px;
+    border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 10px;
+    font-size: 9px;
     color: #fff;
     flex-shrink: 0;
   }
-  .field:nth-child(1) .icon { background: #00C48C; }
-  .field:nth-child(2) .icon { background: #00A3B5; }
-  .field:nth-child(3) .icon { background: #F0AD4E; }
-  .field:nth-child(4) .icon { background: #5CB85C; }
+  [data-field="name"] .icon { background: #00C48C; }
+  [data-field="detail"] .icon { background: #00A3B5; }
+  [data-field="price"] .icon { background: #F0AD4E; }
+  [data-field="audience"] .icon { background: #5CB85C; }
 
   .field-input {
     width: 100%;
-    border: 2px solid #e0f2ec;
-    border-radius: 12px;
-    padding: 12px 14px;
-    font-size: 15px;
+    border: 1.5px solid #e0f2ec;
+    border-radius: 10px;
+    padding: 9px 12px;
+    font-size: 14px;
     color: #333;
     background: #f8fdfb;
     transition: all 0.2s;
@@ -107,13 +96,13 @@
   .presets {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 8px;
+    gap: 6px;
+    margin-top: 6px;
   }
   .chip {
-    font-size: 12px;
-    padding: 5px 12px;
-    border-radius: 20px;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 16px;
     border: 1px solid #c8eddf;
     background: #eef9f4;
     color: #2d8a6e;
@@ -137,20 +126,20 @@
   /* Copy button */
   .btn-copy {
     width: 100%;
-    padding: 16px;
+    padding: 13px;
     border: none;
-    border-radius: 14px;
+    border-radius: 12px;
     background: linear-gradient(135deg, #00C48C 0%, #00A3B5 100%);
     color: #fff;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    margin-top: 8px;
+    gap: 7px;
+    margin-top: 4px;
   }
   .btn-copy:active { transform: scale(0.97); opacity: 0.9; }
   .btn-copy.copied {
@@ -160,20 +149,20 @@
   /* Open app button */
   .btn-app {
     width: 100%;
-    padding: 14px;
+    padding: 11px;
     border: 2px solid #00C48C;
-    border-radius: 14px;
+    border-radius: 12px;
     background: #fff;
     color: #00B894;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    margin-top: 12px;
+    gap: 7px;
+    margin-top: 8px;
     text-decoration: none;
   }
   .btn-app:active { transform: scale(0.97); background: #f0faf6; }
@@ -181,10 +170,10 @@
   /* Preview */
   .preview-toggle {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 12px;
   }
   .preview-toggle a {
-    font-size: 13px;
+    font-size: 12px;
     color: #999;
     text-decoration: none;
     border-bottom: 1px dashed #ccc;
@@ -192,16 +181,16 @@
   }
   .preview-box {
     display: none;
-    margin-top: 16px;
-    padding: 16px;
+    margin-top: 10px;
+    padding: 12px;
     background: #f4fbf8;
-    border-radius: 12px;
+    border-radius: 10px;
     border: 1px solid #d4f0e4;
   }
   .preview-box.show { display: block; }
   .preview-box pre {
-    font-size: 13px;
-    line-height: 1.7;
+    font-size: 12px;
+    line-height: 1.6;
     white-space: pre-wrap;
     word-break: break-word;
     color: #555;
@@ -213,14 +202,6 @@
     padding: 1px 4px;
     border-radius: 3px;
     font-weight: 500;
-  }
-
-  /* Footer */
-  .footer {
-    text-align: center;
-    margin-top: 24px;
-    font-size: 12px;
-    color: rgba(255,255,255,0.7);
   }
 
   /* Toast */
@@ -256,53 +237,45 @@
   <div class="divider"></div>
 
   <!-- 产品名称 -->
-  <div class="field">
+  <div class="field" data-field="name">
     <div class="field-label"><span class="icon">名</span> 产品名称</div>
     <input class="field-input" id="productName" type="text" value="桌面迷你加湿器" placeholder="输入产品名称">
     <div class="presets">
       <span class="chip" data-target="productName">保温杯</span>
       <span class="chip" data-target="productName">蓝牙耳机</span>
-      <span class="chip" data-target="productName">午睡枕</span>
-      <span class="chip" data-target="productName">机械键盘</span>
       <span class="chip ellipsis" data-target="productName">...</span>
     </div>
   </div>
 
   <!-- 产品细节 -->
-  <div class="field">
+  <div class="field" data-field="detail">
     <div class="field-label"><span class="icon">细</span> 产品细节</div>
-    <input class="field-input" id="productDetail" type="text" value="USB 供电，水箱 300ml，出雾细腻，带小夜灯" placeholder="输入产品细节、卖点">
+    <input class="field-input" id="productDetail" type="text" value="USB 供电，水箱 300ml，出雾细腻" placeholder="输入产品细节、卖点">
     <div class="presets">
       <span class="chip" data-target="productDetail">续航 8 小时</span>
-      <span class="chip" data-target="productDetail">可折叠便携</span>
       <span class="chip" data-target="productDetail">静音设计</span>
-      <span class="chip" data-target="productDetail">316 不锈钢</span>
       <span class="chip ellipsis" data-target="productDetail">...</span>
     </div>
   </div>
 
   <!-- 售价 -->
-  <div class="field">
+  <div class="field" data-field="price">
     <div class="field-label"><span class="icon">价</span> 售价</div>
     <input class="field-input" id="productPrice" type="text" value="59 元" placeholder="输入售价">
     <div class="presets">
-      <span class="chip" data-target="productPrice">29 元</span>
       <span class="chip" data-target="productPrice">99 元</span>
       <span class="chip" data-target="productPrice">199 元</span>
-      <span class="chip" data-target="productPrice">399 元</span>
       <span class="chip ellipsis" data-target="productPrice">...</span>
     </div>
   </div>
 
   <!-- 目标人群 -->
-  <div class="field">
+  <div class="field" data-field="audience">
     <div class="field-label"><span class="icon">人</span> 目标人群</div>
     <input class="field-input" id="targetAudience" type="text" value="办公室白领" placeholder="输入目标用户">
     <div class="presets">
       <span class="chip" data-target="targetAudience">学生党</span>
       <span class="chip" data-target="targetAudience">宝妈</span>
-      <span class="chip" data-target="targetAudience">数码爱好者</span>
-      <span class="chip" data-target="targetAudience">健身人群</span>
       <span class="chip ellipsis" data-target="targetAudience">...</span>
     </div>
   </div>
