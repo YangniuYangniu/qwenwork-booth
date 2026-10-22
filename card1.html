@@ -407,24 +407,68 @@
     link.textContent = box.classList.contains('show') ? '收起完整提示词 ↑' : '查看完整提示词 ↓';
   }
 
-  // Copy prompt
+  // Copy prompt — mobile-compatible
   function copyPrompt() {
     const prompt = buildPrompt();
     const btn = document.getElementById('btnCopy');
 
+    // Try modern Clipboard API first
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(prompt).then(() => showCopied(btn));
+      navigator.clipboard.writeText(prompt).then(() => {
+        showCopied(btn);
+      }).catch(() => {
+        // Clipboard API failed (common on mobile), fall back
+        fallbackCopy(prompt, btn);
+      });
     } else {
-      const ta = document.createElement('textarea');
-      ta.value = prompt;
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-      showCopied(btn);
+      fallbackCopy(prompt, btn);
     }
+  }
+
+  function fallbackCopy(text, btn) {
+    // Create a visible but off-screen textarea for mobile compatibility
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    // Make it visible but off-screen (mobile requires visible + selectable)
+    ta.style.position = 'fixed';
+    ta.style.top = '0';
+    ta.style.left = '0';
+    ta.style.width = '2em';
+    ta.style.height = '2em';
+    ta.style.padding = '0';
+    ta.style.border = 'none';
+    ta.style.outline = 'none';
+    ta.style.boxShadow = 'none';
+    ta.style.background = 'transparent';
+    ta.style.fontSize = '16px'; // prevent iOS zoom
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    ta.setSelectionRange(0, text.length);
+
+    try {
+      const success = document.execCommand('copy');
+      if (success) {
+        showCopied(btn);
+      } else {
+        showToast('复制失败，请长按文字手动复制');
+        showPromptForManualCopy(text);
+      }
+    } catch (err) {
+      showToast('复制失败，请长按文字手动复制');
+      showPromptForManualCopy(text);
+    }
+
+    document.body.removeChild(ta);
+  }
+
+  function showPromptForManualCopy(text) {
+    const box = document.getElementById('previewBox');
+    const content = document.getElementById('previewContent');
+    content.textContent = text;
+    box.classList.add('show');
+    const link = document.querySelector('.preview-toggle a');
+    link.textContent = '收起 ↑';
   }
 
   function showCopied(btn) {
