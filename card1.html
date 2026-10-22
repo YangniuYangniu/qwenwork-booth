@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>电商营销文案，都用千问办公</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+    background: linear-gradient(160deg, #00C48C 0%, #00A3B5 100%);
+    min-height: 100vh;
+    padding: 20px 16px 40px;
+    color: #333;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 28px 20px;
+    max-width: 420px;
+    margin: 0 auto;
+    box-shadow: 0 20px 60px rgba(0, 150, 120, 0.2);
+  }
+
+  /* Header */
+  .header { text-align: center; margin-bottom: 24px; }
+  .header .badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #00C48C, #00A3B5);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a2e;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .header h1 span { color: #00B894; }
+  .header .scene {
+    font-size: 14px;
+    color: #888;
+    line-height: 1.5;
+  }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #d4f5e9, transparent);
+    margin: 20px 0;
+  }
+
+  /* Field section */
+  .field { margin-bottom: 20px; }
+  .field-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .field-label .icon {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .field:nth-child(1) .icon { background: #00C48C; }
+  .field:nth-child(2) .icon { background: #00A3B5; }
+  .field:nth-child(3) .icon { background: #F0AD4E; }
+  .field:nth-child(4) .icon { background: #5CB85C; }
+
+  .field-input {
+    width: 100%;
+    border: 2px solid #e0f2ec;
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 15px;
+    color: #333;
+    background: #f8fdfb;
+    transition: all 0.2s;
+    outline: none;
+    font-family: inherit;
+  }
+  .field-input:focus {
+    border-color: #00C48C;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(0, 196, 140, 0.12);
+  }
+  .field-input::placeholder { color: #bbb; }
+
+  /* Preset chips */
+  .presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .chip {
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid #c8eddf;
+    background: #eef9f4;
+    color: #2d8a6e;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .chip:active, .chip:hover {
+    background: #00C48C;
+    color: #fff;
+    border-color: #00C48C;
+    transform: scale(0.95);
+  }
+  .chip.ellipsis {
+    border-style: dashed;
+    color: #aaa;
+    background: #f5f5f5;
+    border-color: #ddd;
+  }
+
+  /* Copy button */
+  .btn-copy {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #00C48C 0%, #00A3B5 100%);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .btn-copy:active { transform: scale(0.97); opacity: 0.9; }
+  .btn-copy.copied {
+    background: linear-gradient(135deg, #38d9a9 0%, #20c997 100%);
+  }
+
+  /* Open app button */
+  .btn-app {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #00C48C;
+    border-radius: 14px;
+    background: #fff;
+    color: #00B894;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+    text-decoration: none;
+  }
+  .btn-app:active { transform: scale(0.97); background: #f0faf6; }
+
+  /* Preview */
+  .preview-toggle {
+    text-align: center;
+    margin-top: 20px;
+  }
+  .preview-toggle a {
+    font-size: 13px;
+    color: #999;
+    text-decoration: none;
+    border-bottom: 1px dashed #ccc;
+    padding-bottom: 1px;
+  }
+  .preview-box {
+    display: none;
+    margin-top: 16px;
+    padding: 16px;
+    background: #f4fbf8;
+    border-radius: 12px;
+    border: 1px solid #d4f0e4;
+  }
+  .preview-box.show { display: block; }
+  .preview-box pre {
+    font-size: 13px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: #555;
+    font-family: inherit;
+  }
+  .preview-box .highlight {
+    background: #d4f5e9;
+    color: #0a7c5a;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-weight: 500;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background: rgba(0,0,0,0.75);
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 14px;
+    opacity: 0;
+    transition: all 0.3s;
+    pointer-events: none;
+    z-index: 999;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="header">
+    <div class="badge">NFC 场景卡</div>
+    <h1>电商营销文案<br>都用<span>千问办公</span></h1>
+    <p class="scene">仓库里堆满了卖不动的货？交给千问办公，三句话让人忍不住下单！</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 产品名称 -->
+  <div class="field">
+    <div class="field-label"><span class="icon">名</span> 产品名称</div>
+    <input class="field-input" id="productName" type="text" value="桌面迷你加湿器" placeholder="输入产品名称">
+    <div class="presets">
+      <span class="chip" data-target="productName">保温杯</span>
+      <span class="chip" data-target="productName">蓝牙耳机</span>
+      <span class="chip" data-target="productName">午睡枕</span>
+      <span class="chip" data-target="productName">机械键盘</span>
+      <span class="chip ellipsis" data-target="productName">...</span>
+    </div>
+  </div>
+
+  <!-- 产品细节 -->
+  <div class="field">
+    <div class="field-label"><span class="icon">细</span> 产品细节</div>
+    <input class="field-input" id="productDetail" type="text" value="USB 供电，水箱 300ml，出雾细腻，带小夜灯" placeholder="输入产品细节、卖点">
+    <div class="presets">
+      <span class="chip" data-target="productDetail">续航 8 小时</span>
+      <span class="chip" data-target="productDetail">可折叠便携</span>
+      <span class="chip" data-target="productDetail">静音设计</span>
+      <span class="chip" data-target="productDetail">316 不锈钢</span>
+      <span class="chip ellipsis" data-target="productDetail">...</span>
+    </div>
+  </div>
+
+  <!-- 售价 -->
+  <div class="field">
+    <div class="field-label"><span class="icon">价</span> 售价</div>
+    <input class="field-input" id="productPrice" type="text" value="59 元" placeholder="输入售价">
+    <div class="presets">
+      <span class="chip" data-target="productPrice">29 元</span>
+      <span class="chip" data-target="productPrice">99 元</span>
+      <span class="chip" data-target="productPrice">199 元</span>
+      <span class="chip" data-target="productPrice">399 元</span>
+      <span class="chip ellipsis" data-target="productPrice">...</span>
+    </div>
+  </div>
+
+  <!-- 目标人群 -->
+  <div class="field">
+    <div class="field-label"><span class="icon">人</span> 目标人群</div>
+    <input class="field-input" id="targetAudience" type="text" value="办公室白领" placeholder="输入目标用户">
+    <div class="presets">
+      <span class="chip" data-target="targetAudience">学生党</span>
+      <span class="chip" data-target="targetAudience">宝妈</span>
+      <span class="chip" data-target="targetAudience">数码爱好者</span>
+      <span class="chip" data-target="targetAudience">健身人群</span>
+      <span class="chip ellipsis" data-target="targetAudience">...</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 复制按钮 -->
+  <button class="btn-copy" id="btnCopy" onclick="copyPrompt()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+    复制提示词
+  </button>
+
+  <!-- 打开千问办公 -->
+  <a class="btn-app" href="https://qwenwork.cn/app" target="_blank" onclick="openApp()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+    打开千问办公，粘贴发送
+  </a>
+
+  <!-- 预览提示词 -->
+  <div class="preview-toggle">
+    <a href="javascript:void(0)" onclick="togglePreview()">查看完整提示词 ↓</a>
+  </div>
+  <div class="preview-box" id="previewBox">
+    <pre id="previewContent"></pre>
+  </div>
+</div>
+
+<div class="footer">碰一下 · 改几个字 · 30 秒出活</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // Chip click → fill input
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', function() {
+      const target = this.dataset.target;
+      const input = document.getElementById(target);
+      const value = this.textContent.trim();
+      if (value === '...') {
+        input.focus();
+        input.select();
+        return;
+      }
+      if (target === 'productDetail' && input.value && !input.value.includes(value)) {
+        input.value = input.value + '，' + value;
+      } else {
+        input.value = value;
+      }
+      input.focus();
+      updatePreview();
+    });
+  });
+
+  // Input change → update preview
+  document.querySelectorAll('.field-input').forEach(input => {
+    input.addEventListener('input', updatePreview);
+  });
+
+  // Build prompt
+  function buildPrompt() {
+    const name = document.getElementById('productName').value || '（产品名称）';
+    const detail = document.getElementById('productDetail').value || '（产品细节）';
+    const price = document.getElementById('productPrice').value || '（售价）';
+    const audience = document.getElementById('targetAudience').value || '（目标人群）';
+
+    return `你是一位电商文案高手。我现在有一款产品需要提炼卖点做营销：
+
+产品名称：${name}
+产品细节：${detail}
+售价：${price}
+目标人群：${audience}
+
+请帮我输出：
+1. 一句详情页主标题（制造反差感，15 字以内）
+2. 三个卖点，每个用"痛点→产品→画面感"的结构，各一句话
+3. 两条小红书风格种草文案（带 emoji，像真实用户分享）`;
+  }
+
+  // Update preview
+  function updatePreview() {
+    const prompt = buildPrompt();
+    const name = document.getElementById('productName').value;
+    const detail = document.getElementById('productDetail').value;
+    const price = document.getElementById('productPrice').value;
+    const audience = document.getElementById('targetAudience').value;
+
+    let html = prompt
+      .replace(name, `<span class="highlight">${name}</span>`)
+      .replace(detail, `<span class="highlight">${detail}</span>`)
+      .replace(price, `<span class="highlight">${price}</span>`)
+      .replace(audience, `<span class="highlight">${audience}</span>`);
+    document.getElementById('previewContent').innerHTML = html;
+  }
+
+  // Toggle preview
+  function togglePreview() {
+    const box = document.getElementById('previewBox');
+    box.classList.toggle('show');
+    const link = document.querySelector('.preview-toggle a');
+    link.textContent = box.classList.contains('show') ? '收起完整提示词 ↑' : '查看完整提示词 ↓';
+  }
+
+  // Copy prompt
+  function copyPrompt() {
+    const prompt = buildPrompt();
+    const btn = document.getElementById('btnCopy');
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(prompt).then(() => showCopied(btn));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = prompt;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showCopied(btn);
+    }
+  }
+
+  function showCopied(btn) {
+    btn.classList.add('copied');
+    btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 已复制！`;
+    showToast('提示词已复制到剪贴板');
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> 复制提示词`;
+    }, 2000);
+  }
+
+  // Open app
+  function openApp() {
+    showToast('打开千问办公，粘贴提示词即可使用');
+  }
+
+  // Toast
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 1800);
+  }
+
+  // Init preview
+  updatePreview();
+</script>
+</body>
+</html>
