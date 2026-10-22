@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>周报日报总结，都用千问办公</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+    background: linear-gradient(160deg, #00C48C 0%, #00A3B5 100%);
+    min-height: 100vh;
+    padding: 14px 12px 28px;
+    color: #333;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 24px;
+    padding: 22px 18px;
+    max-width: 420px;
+    margin: 0 auto;
+    box-shadow:
+      0 1px 2px rgba(0, 120, 90, 0.04),
+      0 8px 24px rgba(0, 120, 90, 0.08),
+      0 24px 48px rgba(0, 120, 90, 0.06);
+    border: 1px solid rgba(0, 196, 140, 0.06);
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 16px;
+    padding: 14px 12px 12px;
+  }
+  .header h1 {
+    font-size: 24px;
+    font-weight: 800;
+    color: #1a1a2e;
+    line-height: 1.35;
+    margin-bottom: 8px;
+    letter-spacing: 0.3px;
+  }
+  .header h1 span {
+    color: #00B894;
+  }
+  .header .scene {
+    font-size: 13px;
+    color: #777;
+    line-height: 1.55;
+    font-weight: 400;
+  }
+
+  /* Field section */
+  .field { margin-bottom: 14px; }
+  .field-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .field-label .icon {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+    display: block;
+  }
+  .field-label .icon path,
+  .field-label .icon line,
+  .field-label .icon circle,
+  .field-label .icon rect {
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  [data-field="done"] .icon { stroke: #00C48C; }
+  [data-field="next"] .icon { stroke: #00A3B5; }
+  [data-field="tone"] .icon { stroke: #E8A33D; }
+
+  .field-input {
+    width: 100%;
+    border: 1.5px solid #dceee6;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 14px;
+    color: #333;
+    background: #fafffc;
+    transition: all 0.2s;
+    outline: none;
+    font-family: inherit;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
+  }
+  .field-input:focus {
+    border-color: #00C48C;
+    background: #fff;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02), 0 0 0 3px rgba(0, 196, 140, 0.1);
+  }
+  .field-input::placeholder { color: #b5b5b5; }
+
+  /* Preset chips */
+  .presets {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 6px;
+    margin-top: 7px;
+    overflow: hidden;
+  }
+  .chip {
+    font-size: 11px;
+    padding: 4px 9px;
+    border-radius: 14px;
+    border: 1px solid #c8eddf;
+    background: #eef9f4;
+    color: #2d8a6e;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .chip:active, .chip:hover {
+    background: #00C48C;
+    color: #fff;
+    border-color: #00C48C;
+    transform: scale(0.96);
+    box-shadow: 0 2px 8px rgba(0, 196, 140, 0.2);
+  }
+  .chip.ellipsis {
+    border-style: dashed;
+    color: #aaa;
+    background: transparent;
+    border-color: #d5d5d5;
+  }
+  .chip.ellipsis:hover {
+    background: #f5f5f5;
+    color: #888;
+    border-color: #ccc;
+    box-shadow: none;
+  }
+
+  /* Copy button */
+  .btn-copy {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #00C48C 0%, #00A3B5 100%);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 6px;
+    box-shadow: 0 4px 14px rgba(0, 196, 140, 0.3);
+  }
+  .btn-copy:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 8px rgba(0, 196, 140, 0.25);
+  }
+  .btn-copy.copied {
+    background: linear-gradient(135deg, #38d9a9 0%, #20c997 100%);
+    box-shadow: 0 4px 14px rgba(56, 217, 169, 0.3);
+  }
+
+  /* Open app button */
+  .btn-app {
+    width: 100%;
+    padding: 12px;
+    border: 1.5px solid rgba(0, 196, 140, 0.5);
+    border-radius: 14px;
+    background: #fff;
+    color: #00B894;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+    text-decoration: none;
+  }
+  .btn-app:active {
+    transform: translateY(1px);
+    background: #f0faf6;
+    border-color: #00C48C;
+  }
+
+  /* Preview */
+  .preview-toggle {
+    text-align: center;
+    margin-top: 14px;
+  }
+  .preview-toggle a {
+    font-size: 12px;
+    color: #999;
+    text-decoration: none;
+    border-bottom: 1px dashed #ccc;
+    padding-bottom: 2px;
+    transition: color 0.2s;
+  }
+  .preview-toggle a:hover { color: #00C48C; border-color: #00C48C; }
+  .preview-box {
+    display: none;
+    margin-top: 12px;
+    padding: 14px;
+    background: linear-gradient(135deg, #f4fbf8 0%, #f0faf6 100%);
+    border-radius: 12px;
+    border: 1px solid #d4f0e4;
+  }
+  .preview-box.show { display: block; }
+  .preview-box pre {
+    font-size: 12.5px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: #555;
+    font-family: inherit;
+  }
+  .preview-box .highlight {
+    background: rgba(0, 196, 140, 0.12);
+    color: #0a7c5a;
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background: rgba(0,0,0,0.75);
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 14px;
+    opacity: 0;
+    transition: all 0.3s;
+    pointer-events: none;
+    z-index: 999;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="header">
+    <h1>周报日报总结，都用<span>千问办公</span></h1>
+    <p class="scene">周五下午 5:30，周报还没写，脑子里只有碎片记忆？<br>交给千问办公，碎片秒变专业周报！</p>
+  </div>
+
+  <!-- 本周完成 -->
+  <div class="field" data-field="done">
+    <div class="field-label"><svg class="icon" viewBox="0 0 24 24" fill="none"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3h6v2H9z"/><polyline points="9 12 11 14 15 10"/></svg> 本周完成</div>
+    <input class="field-input" id="weekDone" type="text" value="改了三四版客户方案终于过了；帮新人review了两份文档；处理了3个线上bug" placeholder="本周做了哪些事">
+    <div class="presets">
+      <span class="chip" data-target="weekDone">方案过审</span>
+      <span class="chip" data-target="weekDone">文档review</span>
+      <span class="chip" data-target="weekDone">修bug</span>
+      <span class="chip ellipsis" data-target="weekDone">...</span>
+    </div>
+  </div>
+
+  <!-- 下周计划 -->
+  <div class="field" data-field="next">
+    <div class="field-label"><svg class="icon" viewBox="0 0 24 24" fill="none"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="14 7 19 12 14 17"/></svg> 下周计划</div>
+    <input class="field-input" id="weekNext" type="text" value="继续推客户方案；准备季度汇报PPT" placeholder="下周要做什么">
+    <div class="presets">
+      <span class="chip" data-target="weekNext">推进项目</span>
+      <span class="chip" data-target="weekNext">准备汇报</span>
+      <span class="chip" data-target="weekNext">跟进客户</span>
+      <span class="chip ellipsis" data-target="weekNext">...</span>
+    </div>
+  </div>
+
+  <!-- 语气风格 -->
+  <div class="field" data-field="tone">
+    <div class="field-label"><svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> 语气风格</div>
+    <input class="field-input" id="reportTone" type="text" value="正式专业" placeholder="周报语气">
+    <div class="presets">
+      <span class="chip" data-target="reportTone">正式专业</span>
+      <span class="chip" data-target="reportTone">简洁干练</span>
+      <span class="chip" data-target="reportTone">数据导向</span>
+      <span class="chip ellipsis" data-target="reportTone">...</span>
+    </div>
+  </div>
+
+  <!-- 复制按钮 -->
+  <button class="btn-copy" id="btnCopy" onclick="copyPrompt()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+    复制提示词
+  </button>
+
+  <!-- 打开千问办公 -->
+  <a class="btn-app" href="https://qwenwork.cn/app" target="_blank" onclick="openApp()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+    打开千问办公，粘贴发送
+  </a>
+
+  <!-- 预览提示词 -->
+  <div class="preview-toggle">
+    <a href="javascript:void(0)" onclick="togglePreview()">查看完整提示词 ↓</a>
+  </div>
+  <div class="preview-box" id="previewBox">
+    <pre id="previewContent"></pre>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // Chip click → fill input
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', function() {
+      const target = this.dataset.target;
+      const input = document.getElementById(target);
+      const value = this.textContent.trim();
+      if (value === '...') {
+        input.focus();
+        input.select();
+        return;
+      }
+      if (input.value && !input.value.includes(value)) {
+        input.value = input.value + '，' + value;
+      } else {
+        input.value = value;
+      }
+      input.focus();
+      updatePreview();
+    });
+  });
+
+  // Input change → update preview
+  document.querySelectorAll('.field-input').forEach(input => {
+    input.addEventListener('input', updatePreview);
+  });
+
+  // Build prompt
+  function buildPrompt() {
+    const done = document.getElementById('weekDone').value || '（本周完成事项）';
+    const next = document.getElementById('weekNext').value || '（下周计划）';
+    const tone = document.getElementById('reportTone').value || '（语气风格）';
+    return `你是一位职场写作助手。现在是周五下午，我还没写周报，以下是我这周模糊的记忆：
+
+本周完成：
+${done}
+
+下周计划：
+${next}
+
+帮我把这些碎片整理成一份周报，要求：
+- 分"本周完成""下周计划""问题与风险"三个板块
+- 每条用一句话概括，专业但不水
+- 语气${tone}，不要像聊天
+- 如果有体现工作量的点（如加班、多轮修改等），自然地写进去
+
+如果你能再帮我加一句"本周亮点总结"放在最前面就更好了。`;
+  }
+
+  // Update preview
+  function updatePreview() {
+    const prompt = buildPrompt();
+    const done = document.getElementById('weekDone').value;
+    const next = document.getElementById('weekNext').value;
+    const tone = document.getElementById('reportTone').value;
+
+    let html = prompt
+      .replace(done, `<span class="highlight">${done}</span>`)
+      .replace(next, `<span class="highlight">${next}</span>`)
+      .replace(tone, `<span class="highlight">${tone}</span>`);
+    document.getElementById('previewContent').innerHTML = html;
+  }
+
+  // Toggle preview
+  function togglePreview() {
+    const box = document.getElementById('previewBox');
+    box.classList.toggle('show');
+    const link = document.querySelector('.preview-toggle a');
+    link.textContent = box.classList.contains('show') ? '收起完整提示词 ↑' : '查看完整提示词 ↓';
+  }
+
+  // Copy prompt — mobile-compatible
+  function copyPrompt() {
+    const prompt = buildPrompt();
+    const btn = document.getElementById('btnCopy');
+
+    // Try modern Clipboard API first
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(prompt).then(() => {
+        showCopied(btn);
+      }).catch(() => {
+        // Clipboard API failed (common on mobile), fall back
+        fallbackCopy(prompt, btn);
+      });
+    } else {
+      fallbackCopy(prompt, btn);
+    }
+  }
+
+  function fallbackCopy(text, btn) {
+    // Create a visible but off-screen textarea for mobile compatibility
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    // Make it visible but off-screen (mobile requires visible + selectable)
+    ta.style.position = 'fixed';
+    ta.style.top = '0';
+    ta.style.left = '0';
+    ta.style.width = '2em';
+    ta.style.height = '2em';
+    ta.style.padding = '0';
+    ta.style.border = 'none';
+    ta.style.outline = 'none';
+    ta.style.boxShadow = 'none';
+    ta.style.background = 'transparent';
+    ta.style.fontSize = '16px'; // prevent iOS zoom
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    ta.setSelectionRange(0, text.length);
+
+    try {
+      const success = document.execCommand('copy');
+      if (success) {
+        showCopied(btn);
+      } else {
+        showToast('复制失败，请长按文字手动复制');
+        showPromptForManualCopy(text);
+      }
+    } catch (err) {
+      showToast('复制失败，请长按文字手动复制');
+      showPromptForManualCopy(text);
+    }
+
+    document.body.removeChild(ta);
+  }
+
+  function showPromptForManualCopy(text) {
+    const box = document.getElementById('previewBox');
+    const content = document.getElementById('previewContent');
+    content.textContent = text;
+    box.classList.add('show');
+    const link = document.querySelector('.preview-toggle a');
+    link.textContent = '收起 ↑';
+  }
+
+  function showCopied(btn) {
+    btn.classList.add('copied');
+    btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 已复制！`;
+    showToast('提示词已复制到剪贴板');
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> 复制提示词`;
+    }, 2000);
+  }
+
+  // Open app
+  function openApp() {
+    showToast('打开千问办公，粘贴提示词即可使用');
+  }
+
+  // Toast
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 1800);
+  }
+
+  // Init preview
+  updatePreview();
+</script>
+</body>
+</html>
