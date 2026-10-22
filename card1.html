@@ -32,11 +32,9 @@
     text-align: center;
     margin-bottom: 16px;
     padding: 14px 12px 12px;
-    background: linear-gradient(180deg, rgba(0, 196, 140, 0.04) 0%, transparent 100%);
-    border-radius: 16px;
   }
   .header h1 {
-    font-size: 21px;
+    font-size: 24px;
     font-weight: 800;
     color: #1a1a2e;
     line-height: 1.35;
@@ -44,23 +42,13 @@
     letter-spacing: 0.3px;
   }
   .header h1 span {
-    background: linear-gradient(135deg, #00C48C, #00A3B5);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #00B894;
   }
   .header .scene {
     font-size: 13px;
     color: #777;
     line-height: 1.55;
     font-weight: 400;
-  }
-
-  /* Divider */
-  .divider {
-    height: 1px;
-    background: linear-gradient(to right, transparent 0%, #c8eddf 25%, #b0e0d0 50%, #c8eddf 75%, transparent 100%);
-    margin: 16px 0;
   }
 
   /* Field section */
@@ -96,7 +84,6 @@
   .field-input {
     width: 100%;
     border: 1.5px solid #dceee6;
-    border-left: 3px solid #00C48C;
     border-radius: 10px;
     padding: 10px 12px;
     font-size: 14px;
@@ -109,7 +96,6 @@
   }
   .field-input:focus {
     border-color: #00C48C;
-    border-left-color: #00A3B5;
     background: #fff;
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02), 0 0 0 3px rgba(0, 196, 140, 0.1);
   }
@@ -118,13 +104,14 @@
   /* Preset chips */
   .presets {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 6px;
     margin-top: 7px;
+    overflow: hidden;
   }
   .chip {
-    font-size: 11.5px;
-    padding: 4px 11px;
+    font-size: 11px;
+    padding: 4px 9px;
     border-radius: 14px;
     border: 1px solid #c8eddf;
     background: #eef9f4;
@@ -276,15 +263,14 @@
     <p class="scene">仓库里堆满了卖不动的货？<br>交给千问办公，三句话让人忍不住下单！</p>
   </div>
 
-  <div class="divider"></div>
-
-  <!-- 产品名称 -->
+<!-- 产品名称 -->
   <div class="field" data-field="name">
     <div class="field-label"><svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><circle cx="7" cy="7" r="1.5" fill="currentColor" stroke="none"/></svg> 产品名称</div>
     <input class="field-input" id="productName" type="text" value="桌面迷你加湿器" placeholder="输入产品名称">
     <div class="presets">
       <span class="chip" data-target="productName">保温杯</span>
       <span class="chip" data-target="productName">蓝牙耳机</span>
+      <span class="chip" data-target="productName">充电宝</span>
       <span class="chip ellipsis" data-target="productName">...</span>
     </div>
   </div>
@@ -296,6 +282,7 @@
     <div class="presets">
       <span class="chip" data-target="productDetail">续航 8 小时</span>
       <span class="chip" data-target="productDetail">静音设计</span>
+      <span class="chip" data-target="productDetail">轻便小巧</span>
       <span class="chip ellipsis" data-target="productDetail">...</span>
     </div>
   </div>
@@ -307,6 +294,7 @@
     <div class="presets">
       <span class="chip" data-target="productPrice">99 元</span>
       <span class="chip" data-target="productPrice">199 元</span>
+      <span class="chip" data-target="productPrice">49 元</span>
       <span class="chip ellipsis" data-target="productPrice">...</span>
     </div>
   </div>
@@ -318,13 +306,12 @@
     <div class="presets">
       <span class="chip" data-target="targetAudience">学生党</span>
       <span class="chip" data-target="targetAudience">宝妈</span>
+      <span class="chip" data-target="targetAudience">数码控</span>
       <span class="chip ellipsis" data-target="targetAudience">...</span>
     </div>
   </div>
 
-  <div class="divider"></div>
-
-  <!-- 复制按钮 -->
+<!-- 复制按钮 -->
   <button class="btn-copy" id="btnCopy" onclick="copyPrompt()">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
     复制提示词
