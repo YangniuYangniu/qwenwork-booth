@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>跳转千问办公</title>
+<style>
+  body { font-family: -apple-system, "PingFang SC", sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; background: linear-gradient(160deg, #00C48C 0%, #00A3B5 100%); color: #fff; text-align: center; margin: 0; }
+  .msg { font-size: 18px; line-height: 1.6; }
+  .spinner { width: 36px; height: 36px; border: 3px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 20px auto 0; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="msg">正在打开千问办公…<div class="spinner"></div></div>
+<script>
+  var CARDS = {card1:'电商营销',card2:'职场沟通',card3:'会议记录',card4:'活动策划',card5:'面试准备',card6:'周报总结'};
+  var params = new URLSearchParams(location.search);
+  var cardId = params.get('card') || '';
+  var cardName = CARDS[cardId] || cardId;
+  var TRACKING_URL = "https://script.google.com/macros/s/AKfycbypA3nkgboWPE_ZZugyG8NtihAwt2fzpL7Sr3eiqjnQx7zuc-nnOlundO9gToSr53Ln/exec";
+
+  // Log QR scan
+  try {
+    var data = JSON.stringify({card: cardName, action: 'qr_scan_app', ts: new Date().toISOString(), ua: navigator.userAgent});
+    fetch(TRACKING_URL, {method: "POST", mode: "no-cors", headers: {"Content-Type": "text/plain;charset=utf-8"}, body: data, keepalive: true}).catch(function(){});
+  } catch(e) {}
+
+  // Redirect after short delay to ensure tracking fires
+  setTimeout(function() {
+    location.href = 'https://qwenwork.cn/app';
+  }, 500);
+</script>
+</body>
+</html>
