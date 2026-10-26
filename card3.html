@@ -348,10 +348,8 @@
   }
 
 
-  // Auto-log QR scan on page load
-  if (location.search.indexOf('source=qr') > -1) {
-    trackEvent('qr_scan_activity');
-  }
+  // Auto-log page open (NFC + QR scan combined)
+  trackEvent('page_open');
 
   // Chip click → fill input
   document.querySelectorAll('.chip').forEach(chip => {
