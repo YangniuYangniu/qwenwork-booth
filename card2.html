@@ -347,6 +347,12 @@
     } catch(e) {}
   }
 
+
+  // Auto-log QR scan on page load
+  if (location.search.indexOf('source=qr') > -1) {
+    trackEvent('qr_scan_activity');
+  }
+
   // Chip click → fill input
   document.querySelectorAll('.chip').forEach(chip => {
     chip.addEventListener('click', function() {
