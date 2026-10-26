@@ -336,6 +336,26 @@
 <div class="toast" id="toast"></div>
 
 <script>
+  var CARD_ID = '电商营销';
+
+  // === 打点追踪 ===
+  var TRACKING_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
+  function trackEvent(action) {
+    try {
+      var data = JSON.stringify({
+        card: CARD_ID,
+        action: action,
+        ts: new Date().toISOString(),
+        ua: navigator.userAgent
+      });
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(TRACKING_URL, new Blob([data], {type: 'application/json'}));
+      } else {
+        fetch(TRACKING_URL, {method: 'POST', body: data, headers: {'Content-Type': 'application/json'}, keepalive: true}).catch(function(){});
+      }
+    } catch(e) {}
+  }
+
   // Chip click → fill input
   document.querySelectorAll('.chip').forEach(chip => {
     chip.addEventListener('click', function() {
@@ -408,6 +428,7 @@
 
   // Copy prompt — mobile-compatible
   function copyPrompt() {
+    trackEvent('copy_prompt');
     const prompt = buildPrompt();
     const btn = document.getElementById('btnCopy');
 
@@ -482,6 +503,7 @@
 
   // Open app
   function openApp() {
+    trackEvent('open_app');
     showToast('打开千问办公，粘贴提示词即可使用');
   }
 
